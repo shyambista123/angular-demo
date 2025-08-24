@@ -1,0 +1,134 @@
+<div class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="flex flex-col gap-6 w-full max-w-md">
+        <div class="rounded-lg bg-white text-black shadow-sm">
+            <div class="p-6">
+                <h3 class="text-2xl font-semibold tracking-tight">
+                    Create an account
+                </h3>
+                <p class="text-sm text-gray-500 mt-1">
+                    Enter your details below to sign up
+                </p>
+            </div>
+
+            <div class="p-6 pt-0">
+                <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+                    @if(errorMessage){
+                    <div class="mb-4 rounded-md bg-red-50 p-3 border border-red-300">
+                        <p class="text-sm font-medium text-red-600">
+                            {{ errorMessage }}
+                        </p>
+                    </div>
+                    }
+                    <div class="flex flex-col gap-6">
+                        <div class="grid gap-1.5">
+                            <label for="fullName" class="text-sm font-medium leading-none">Full Name</label>
+
+                            <div class="relative">
+                                <input type="text" id="fullName" name="fullName" required placeholder="John Doe"
+                                    formControlName="fullName"
+                                    class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 pr-10 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" />
+
+                                @if (fullName?.valid) {
+                                <ng-icon style="color: green;" name="heroCheckCircle"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 pointer-events-none" />
+                                }
+                                @if (fullName?.invalid) {
+                                <ng-icon style="color: red;" name="heroXCircle"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 pointer-events-none" />
+                                }
+                            </div>
+
+                            @if (fullName?.hasError('required') && fullName?.touched) {
+                            <span class="mt-1 text-xs font-medium text-red-500">Full name is required</span>
+                            }
+                            @if (fullName?.hasError('minlength')) {
+                            <span class="mt-1 text-xs font-medium text-red-500">Full name must be at least 3 characters
+                                long</span>
+                            }
+                        </div>
+
+                        <div class="grid gap-1.5">
+                            <label for="email" class="text-sm font-medium leading-none">Email</label>
+
+                            <div class="relative">
+                                <input type="email" id="email" name="email" required placeholder="m@example.com"
+                                    formControlName="email"
+                                    class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 pr-10 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" />
+
+                                @if (email?.valid) {
+                                <ng-icon style="color: green;" name="heroCheckCircle"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 pointer-events-none" />
+                                }
+                                @if (email?.invalid) {
+                                <ng-icon style="color: red;" name="heroXCircle"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 pointer-events-none" />
+                                }
+                            </div>
+
+                            @if (email?.hasError('required') && email?.touched) {
+                            <span class="mt-1 text-xs font-medium text-red-500">Please enter an email</span>
+                            }
+                            @if (email?.hasError('email')) {
+                            <span class="mt-1 text-xs font-medium text-red-500">Please enter a valid email
+                                address</span>
+                            }
+                        </div>
+
+                        <div class="grid gap-1.5">
+                            <label for="password" class="text-sm font-medium leading-none">Password</label>
+
+                            <div class="relative">
+                                <input [type]="showPassword ? 'text' : 'password'" id="password" name="password"
+                                    placeholder="••••••••" formControlName="password" required
+                                    class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 pr-20 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" />
+
+                                <button type="button" (click)="togglePasswordVisibility()"
+                                    class="absolute right-10 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 h-5 w-5">
+                                    <ng-icon [name]="showPassword ? 'heroEyeSlash' : 'heroEye'"
+                                        class="h-5 w-5 [fill:currentColor]" />
+                                </button>
+
+                                @if (password?.valid) {
+                                <ng-icon style="color: green;" name="heroCheckCircle"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 [fill:currentColor] pointer-events-none" />
+                                }
+
+                                @if (password?.invalid) {
+                                <ng-icon style="color: red;" name="heroXCircle"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 [fill:currentColor] pointer-events-none" />
+                                }
+                            </div>
+
+                            @if (password?.hasError('required') && password?.touched) {
+                            <span class="mt-1 text-xs font-medium text-red-500">Password is required.</span>
+                            }
+                            @if (password?.hasError('minlength') || password?.hasError('pattern')) {
+                            <span class="mt-1 text-xs font-medium text-red-500">
+                                Must be 8+ chars with uppercase, lowercase, number & special character
+                            </span>
+                            }
+                        </div>
+
+                        <div class="flex flex-col gap-3 pt-2">
+                            <button type="submit"
+                                class="cursor-pointer h-10 w-full rounded-md bg-black text-white text-sm font-medium hover:bg-black/90 transition">
+                                Sign Up
+                            </button>
+                            <button type="button"
+                                class="cursor-pointer h-10 w-full rounded-md border border-gray-300 text-sm font-medium hover:bg-gray-100 transition">
+                                Sign up with Google
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center text-sm text-gray-600">
+                        Already have an account?
+                        <a routerLink="/login" class="underline underline-offset-4 text-blue-600">
+                            Login
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
