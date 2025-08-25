@@ -1,4 +1,4 @@
 export const environment = {
     production: false, 
-    apiBaseUrl: 'http://localhost:8080'
+    apiBaseUrl: 'https://springboot-dev-92ecfba3223c.herokuapp.com/'
 };
