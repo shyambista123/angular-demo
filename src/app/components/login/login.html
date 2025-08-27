@@ -79,8 +79,12 @@
 
                         <div class="flex flex-col gap-3">
                             <button type="submit"
-                                class="h-10 w-full rounded-md bg-black cursor-pointer text-white text-sm font-medium hover:bg-black/90 transition">
+                                class="h-10 w-full rounded-md bg-black cursor-pointer text-white text-sm font-medium hover:bg-black/90 transition"
+                                [disabled]="isLoggingIn">
                                 Login
+                                @if(isLoggingIn){
+                                <span>Processing ...</span>
+                                }
                             </button>
                             <button type="button"
                                 class="h-10 cursor-pointer w-full rounded-md border border-gray-300 text-sm font-medium hover:bg-gray-100 transition">
@@ -88,10 +92,10 @@
                             </button>
                         </div>
                     </div>
-
                     <div class="mt-4 text-center text-sm text-gray-600">
                         Don’t have an account?
-                        <a routerLink="/register" class="cursor-pointer underline underline-offset-4 text-blue-600">Sign up</a>
+                        <a routerLink="/register" class="cursor-pointer underline underline-offset-4 text-blue-600">Sign
+                            up</a>
                     </div>
                 </form>
             </div>

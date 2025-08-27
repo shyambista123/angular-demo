@@ -11,6 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -61,22 +62,27 @@ export class Register {
   }
 
   errorMessage: string | null = null;
+  isSigningUp!: boolean;
 
   registerUser() {
     if (this.registerForm.valid) {
-      this.authService.registerUser(this.registerForm.value).subscribe({
-        next: (response) => {
-          console.log('Registration successful ', response);
-          this.router.navigate(['/login']);
-        },
-              error: (err) => {
-        if (err.error && err.error.message) {
-          this.errorMessage = err.error.message;
-        } else {
-          this.errorMessage = 'Something went wrong. Please try again.';
-        }
-      }
-      });
+      this.isSigningUp = true;
+      this.authService
+        .registerUser(this.registerForm.value)
+        .pipe(finalize(() => (this.isSigningUp = false)))
+        .subscribe({
+          next: (response) => {
+            // console.log('Registration successful ', response);
+            this.router.navigate(['/login']);
+          },
+          error: (err) => {
+            if (err.error && err.error.message) {
+              this.errorMessage = err.error.message;
+            } else {
+              this.errorMessage = 'Something went wrong. Please try again.';
+            }
+          },
+        });
     }
   }
 }

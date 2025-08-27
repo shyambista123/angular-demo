@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -16,16 +16,26 @@ export class AuthService {
   authState$ = this.authState.asObservable();
 
   registerUser(data: { fullName: string; email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiBaseUrl}/register`, data);
+    return this.http.post(`${this.apiBaseUrl}/register`, data, {
+      headers: new HttpHeaders({
+        'X-Skip-Global-Loader': 'true',
+      }),
+    });
   }
 
   loginUser(data: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiBaseUrl}/login`, data).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
-        this.authState.next(true);
+    return this.http
+      .post(`${this.apiBaseUrl}/login`, data, {
+        headers: new HttpHeaders({
+          'X-Skip-Global-Loader': 'true',
+        }),
       })
-    );
+      .pipe(
+        tap((res: any) => {
+          localStorage.setItem('token', res.token);
+          this.authState.next(true);
+        })
+      );
   }
 
   getToken(): string | null {

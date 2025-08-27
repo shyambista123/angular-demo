@@ -18,7 +18,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: any)=>{
       if(error instanceof HttpErrorResponse && error.status == 403){
-        console.log('Token expired or invalid');
         authService.logout();
       }
       return throwError(()=> error);

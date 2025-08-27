@@ -11,6 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -56,22 +57,26 @@ export class Login {
 
   errorMessage: string | null = null;
 
-
+  isLoggingIn!: boolean;
   loginUser() {
     if (this.loginForm.valid) {
-      this.authService.loginUser(this.loginForm.value).subscribe({
-        next: (response) => {
-          console.log('User logged in successfully', response);
-          this.router.navigate(['/']);
-        },
-        error: (err) => {
-        if (err.error && err.error.message) {
-          this.errorMessage = err.error.message;
-        } else {
-          this.errorMessage = 'Something went wrong. Please try again.';
-        }
-      },
-      });
+      this.isLoggingIn = true;
+      this.authService
+        .loginUser(this.loginForm.value)
+        .pipe(finalize(() => (this.isLoggingIn = false)))
+        .subscribe({
+          next: (response) => {
+            // console.log('User logged in successfully', response);
+            this.router.navigate(['/']);
+          },
+          error: (err) => {
+            if (err.error && err.error.message) {
+              this.errorMessage = err.error.message;
+            } else {
+              this.errorMessage = 'Something went wrong. Please try again.';
+            }
+          },
+        });
     }
   }
 }
