@@ -1,0 +1,39 @@
+<app-header />
+<div class="bg-gray-100 min-h-screen font-serif text-gray-900 antialiased">
+    <div class="container mx-auto px-6 py-12 lg:px-12 lg:py-16">
+        <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            @for(post of posts; track post.id) {
+            <div class="col-span-1">
+                <article class="p-6 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div>
+                        <h3 routerLink="/post/{{post.id}}"
+                            class="text-2xl font-medium text-gray-900 hover:text-indigo-600 cursor-pointer transition-colors duration-200">
+                            {{ post.title }}
+                        </h3>
+                        <p class="text-gray-600 text-base mt-3 line-clamp-3 leading-relaxed">{{ post.content }}</p>
+                        <p class="text-sm text-gray-500 mt-3 font-light italic">
+                            By {{ post.authorName }} | {{ post.createdAt | date: 'mediumDate' }}
+                        </p>
+                    </div>
+                    <!-- <div class="mt-6 flex gap-6 justify-end">
+                        @if(currentUserId() == post.authorId) {
+                        <ng-icon style="color: #EF4444;" name="heroTrash"
+                            class="h-6 w-6 cursor-pointer hover:text-red-500 transition-colors duration-200"
+                            (click)="confirmDelete(post.id)" />
+                        <ng-icon style="color: #4B5563;" name="heroPencilSquare"
+                            class="h-6 w-6 cursor-pointer hover:text-indigo-600 transition-colors duration-200"
+                            (click)="showEditForm(post.id)" />
+                        }
+                    </div> -->
+                </article>
+            </div>
+            }
+            @if(posts.length === 0) {
+            <div class="col-span-full text-center bg-white p-16 rounded-xl shadow-lg border border-gray-200">
+                <h3 class="text-2xl font-medium text-gray-900">No Posts Available</h3>
+                <p class="text-gray-600 mt-3 text-base">Start the conversation by creating your first post.</p>
+            </div>
+            }
+        </main>
+    </div>
+</div>

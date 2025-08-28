@@ -1,0 +1,36 @@
+<app-header />
+<div class="bg-gray-100 min-h-screen font-serif text-gray-900 antialiased">
+    <div class="container mx-auto px-6 py-12 lg:px-12 lg:py-16">
+        <div class="bg-white rounded-xl border border-gray-200 shadow-md p-8">
+            <h1 class="text-3xl font-medium text-gray-900">{{ post.title }}</h1>
+            <p class="text-lg text-gray-600 mt-4 leading-relaxed italic">{{ post.content }}</p>
+            <div class="mt-6 text-sm text-gray-500 flex items-center space-x-6">
+                <div class="flex items-center space-x-2">
+                    <ng-icon name="heroUser" class="h-5 w-5 text-gray-400" />
+                    <span>{{ post.authorName }}</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <ng-icon name="heroCalendar" class="h-5 w-5 text-gray-400" />
+                    <span>{{ post.createdAt | date: 'mediumDate' }}</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <ng-icon name="heroClock" class="h-5 w-5 text-gray-400" />
+                    <span>Updated: {{ post.updatedAt | date: 'medium' }}</span>
+                </div>
+            </div>
+            <!-- Actions (Edit, Delete) -->
+            <!-- <div class="mt-6 flex justify-end space-x-6">
+                <ng-icon name="heroPencilSquare"
+                    class="h-6 w-6 cursor-pointer text-gray-600 hover:text-indigo-600 transition-colors duration-200" />
+                <ng-icon name="heroTrash"
+                    class="h-6 w-6 cursor-pointer text-red-500 hover:text-red-600 transition-colors duration-200" />
+            </div> -->
+        </div>
+        <div class="mt-12 text-center">
+            <button routerLink="/"
+                class="px-8 py-3 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200">
+                Back to Posts
+            </button>
+        </div>
+    </div>
+</div>

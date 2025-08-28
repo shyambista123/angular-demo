@@ -1,0 +1,26 @@
+@if (isOpen()) {
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" (click)="close()">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-lg relative" (click)="$event.stopPropagation()">
+
+        <div class="flex justify-between items-center p-4">
+            <h3 class="text-lg font-semibold">{{ title() }}</h3>
+            <button class="text-gray-400 hover:text-gray-600" (click)="close()">
+                ✕
+            </button>
+        </div>
+
+        <div class="p-4">
+            <ng-content></ng-content>
+        </div>
+
+        <div class="flex justify-end gap-2 p-4">
+            <button class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-800" (click)="close()">
+                Cancel
+            </button>
+            <button class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white" (click)="confirm()">
+                Confirm
+            </button>
+        </div>
+    </div>
+</div>
+}
