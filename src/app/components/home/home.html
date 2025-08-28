@@ -36,18 +36,20 @@
             </div>
             }
             @if(posts.length === 0) {
-            <div class="col-span-full text-center bg-white p-16 rounded-xl shadow-lg border border-gray-200">
+            <div class="col-span-full text-center bg-white p-16 rounded-xl shadow-md border border-gray-200">
                 <h3 class="text-2xl font-medium text-gray-900">No Posts Available</h3>
                 <p class="text-gray-600 mt-3 text-base">Start the conversation by creating your first post.</p>
             </div>
             }
         </main>
+        @if(posts.length === 0) {
         <div class="mt-12 text-center">
             <button routerLink="/posts"
                 class="px-8 py-3 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200">
                 View All Posts
             </button>
         </div>
+        }
     </div>
 </div>
 <app-modal [title]="'Create New Post'" [isOpen]="modalOpen('add')" (closed)="onModalClosed()"
